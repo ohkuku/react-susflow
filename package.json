@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "gh-actions-release": "rm .npmrc && semantic-release --debug"
   },
   "husky": {
     "hooks": {
