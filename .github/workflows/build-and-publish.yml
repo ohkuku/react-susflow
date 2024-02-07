@@ -3,10 +3,9 @@ name: Release
 on:
   push:
     branches:
-      - 'release/alpha/**'
-      - 'release/beta/**'
-      - 'release/rc/**'
-      - 'release/main/**'
+      - 'feature/**'
+      - 'develop'
+      - 'main'
 
 jobs:
   release:
