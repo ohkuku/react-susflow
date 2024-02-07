@@ -25,3 +25,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.SUPER_ADMIN_GITHUB_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
