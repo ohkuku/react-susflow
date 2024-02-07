@@ -23,7 +23,7 @@ jobs:
       - name: Run Semantic Release
         run: npx semantic-release
         env:
-          GH_TOKEN: ${{ secrets.SUPER_ADMIN_GITHUB_TOKEN}}
+          GH_TOKEN: ${{ secrets.SUPER_ADMIN_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 permissions:
