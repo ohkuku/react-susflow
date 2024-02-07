@@ -10,8 +10,15 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -25,9 +32,3 @@ jobs:
           GH_TOKEN: ${{ secrets.SUPER_ADMIN_GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-permissions:
-  contents: write
-  packages: write
-  issues: write
-  pull-requests: write
