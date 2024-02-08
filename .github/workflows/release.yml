@@ -1,5 +1,10 @@
 name: Release
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'develop'
+      - 'main'
 jobs:
   release:
     name: Release
