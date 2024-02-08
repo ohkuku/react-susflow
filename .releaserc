@@ -2,7 +2,18 @@
   "dryRun": false,
   "debug": false,
   "branches": [
-    "main"
+    {
+      "name": "feature/*",
+      "prerelease": "alpha"
+    },
+    {
+      "name": "develop",
+      "prerelease": "rc"
+    },
+    {
+      "name": "main",
+      "prerelease": false
+    }
   ],
   "plugins": [
     [
