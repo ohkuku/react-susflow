@@ -1,3 +1,11 @@
+## [1.0.0-alpha.3](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2024-02-08)
+
+
+### Bug Fixes
+
+* default export ([d9d5712](https://github.com/ohkuku/react-susflow/commit/d9d57123aad721ae9247fbd63861f6c75048f180))
+* update test case ([c983a8c](https://github.com/ohkuku/react-susflow/commit/c983a8c2f141f941c02ad9da6841d90dc5f3767e))
+
 ## [1.0.0-alpha.2](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2024-02-08)
 
 
