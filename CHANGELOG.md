@@ -1,3 +1,10 @@
+## [1.0.0-alpha.5](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2024-02-08)
+
+
+### Bug Fixes
+
+* rename main func, lint fix and prettier ([01b37b4](https://github.com/ohkuku/react-susflow/commit/01b37b48ef28b0acd7bc3f28bc2b10eaad217dd9))
+
 ## [1.0.0-alpha.4](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-02-08)
 
 
