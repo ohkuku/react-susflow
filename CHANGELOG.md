@@ -1,3 +1,10 @@
+## [1.0.0-alpha.2](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2024-02-08)
+
+
+### Bug Fixes
+
+* update npm token ([c3b2a75](https://github.com/ohkuku/react-susflow/commit/c3b2a75af481d78df152664c869d6e6713c4f829))
+
 ## 1.0.0-alpha.1 (2024-02-08)
 
 
