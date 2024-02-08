@@ -24,6 +24,7 @@ export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Pro
       if (status === 'loading') throw suspender;
       if (status === 'error') throw error;
       if (status === 'success') return result as T;
+      throw new Error("This should never happen; it's just for type safety.");
     },
   };
 }
