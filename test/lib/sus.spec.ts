@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { createFlow } from '../../src/lib/create-flow';
+import { sus } from 'src';
 
 describe('createFlow', () => {
   it('creates a resource that resolves with the expected value', async () => {
     const mockAsyncFunc = () => Promise.resolve('test value');
-    const resource = createFlow(mockAsyncFunc);
+    const resource = sus(mockAsyncFunc);
 
     let promiseThrown = false;
     try {
