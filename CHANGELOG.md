@@ -1,3 +1,10 @@
+## [1.0.0-alpha.4](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-02-08)
+
+
+### Bug Fixes
+
+* update badges ([783d32b](https://github.com/ohkuku/react-susflow/commit/783d32b4406ab54d8ce0358f5429b38d9a1e0bb9))
+
 ## [1.0.0-alpha.3](https://github.com/ohkuku/react-susflow/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2024-02-08)
 
 
