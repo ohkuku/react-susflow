@@ -38,6 +38,6 @@ jobs:
         run: pnpm run build
       - name: Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN_SUPER_ADMIN }}
+          GH_TOKEN: ${{ secrets.SUPER_ADMIN_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
