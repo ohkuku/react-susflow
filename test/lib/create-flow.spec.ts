@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import createFlow from '../../src/lib/create-flow';
+import { createFlow } from '../../src/lib/create-flow';
 
 describe('createFlow', () => {
   it('creates a resource that resolves with the expected value', async () => {
