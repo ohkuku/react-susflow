@@ -1,6 +1,6 @@
 type SuspenderStatus = 'loading' | 'error' | 'success';
 
-function createFlow<T>(asyncFunction: () => Promise<T>) {
+export function createFlow<T>(asyncFunction: () => Promise<T>) {
     let status: SuspenderStatus = 'loading';
     let result: T | undefined;
     let error: Error | undefined;
@@ -23,5 +23,3 @@ function createFlow<T>(asyncFunction: () => Promise<T>) {
         }
     };
 }
-
-export default createFlow;
