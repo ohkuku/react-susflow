@@ -1,3 +1,10 @@
+## [1.1.0-alpha.2](https://github.com/ohkuku/react-susflow/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2024-02-09)
+
+
+### Bug Fixes
+
+* use map to cache resources in memory ([79e5b09](https://github.com/ohkuku/react-susflow/commit/79e5b09e34d07fe654c2e1c7c224168da39e972d))
+
 ## [1.1.0-alpha.1](https://github.com/ohkuku/react-susflow/compare/v1.0.1-alpha.1...v1.1.0-alpha.1) (2024-02-09)
 
 
