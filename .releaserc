@@ -11,7 +11,7 @@
       "prerelease": "rc"
     },
     {
-      "name": "release/main",
+      "name": "release/prod",
       "prerelease": false
     }
   ],
