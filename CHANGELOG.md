@@ -1,3 +1,11 @@
+## [1.1.0-alpha.3](https://github.com/ohkuku/react-susflow/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2024-02-09)
+
+
+### Bug Fixes
+
+* dependencies lock file ([a8668c2](https://github.com/ohkuku/react-susflow/commit/a8668c25a5629b1c3cc36ec6a09c99bd3672bcf2))
+* update api interface and readme, use storejs as dependency rather than a peer ([c511e0f](https://github.com/ohkuku/react-susflow/commit/c511e0f59803911aac036fff84fcad61bab4f929))
+
 ## [1.1.0-alpha.2](https://github.com/ohkuku/react-susflow/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2024-02-09)
 
 
