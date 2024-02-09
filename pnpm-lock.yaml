@@ -12,11 +12,8 @@ dependencies:
     specifier: ^17.0.0 || ^18.0.0
     version: 18.2.0(react@18.2.0)
   store:
-    specifier: ^2.0.0
+    specifier: ^2.0.5
     version: 2.0.12
-  uuid:
-    specifier: ^7.0.0 || ^8.0.0 || ^9.0.0
-    version: 9.0.1
 
 devDependencies:
   '@commitlint/cli':
@@ -49,9 +46,6 @@ devDependencies:
   '@types/store':
     specifier: ^2.0.5
     version: 2.0.5
-  '@types/uuid':
-    specifier: ^9.0.8
-    version: 9.0.8
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.21.0
     version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1378,10 +1372,6 @@ packages:
 
   /@types/store@2.0.5:
     resolution: {integrity: sha512-5NmTKe3GWdOaykzq7no+Ahf6mafJu0oLc9JNhJ3E26+0oFvd6GnksnZQpMXcH526mfG4xDYjFiKzyDL51PzeWQ==}
-    dev: true
-
-  /@types/uuid@9.0.8:
-    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3):
@@ -6555,11 +6545,6 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
-
-  /uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
-    dev: false
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
