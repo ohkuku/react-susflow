@@ -1,3 +1,11 @@
+## [1.0.1-alpha.1](https://github.com/ohkuku/react-susflow/compare/v1.0.0...v1.0.1-alpha.1) (2024-02-09)
+
+
+### Bug Fixes
+
+* add store.js to enable cache ([d060df1](https://github.com/ohkuku/react-susflow/commit/d060df14156021bcc78f11cb2fb8d5c2232a74be))
+* release rule ([536533a](https://github.com/ohkuku/react-susflow/commit/536533a5031635766a32b78a9eebd7ede3af9ee5))
+
 ## 1.0.0 (2024-02-08)
 
 
