@@ -1,3 +1,10 @@
+## [1.1.0-alpha.1](https://github.com/ohkuku/react-susflow/compare/v1.0.1-alpha.1...v1.1.0-alpha.1) (2024-02-09)
+
+
+### Features
+
+* add cache settings, enableCache, standalone and ttl ([77ad2ea](https://github.com/ohkuku/react-susflow/commit/77ad2eaa0afbeeddb86cd4455077681a2e53094a))
+
 ## [1.0.1-alpha.1](https://github.com/ohkuku/react-susflow/compare/v1.0.0...v1.0.1-alpha.1) (2024-02-09)
 
 
