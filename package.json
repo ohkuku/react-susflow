@@ -1,6 +1,6 @@
 {
   "name": "react-susflow",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "sideEffects": false,
   "type": "module",
@@ -46,6 +46,7 @@
   },
   "homepage": "https://github.com/ohkuku/react-susflow#readme",
   "devDependencies": {
+    "@types/store": "^2.0.5",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
     "@semantic-release/changelog": "^6.0.3",
@@ -83,5 +84,12 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "store": "^2.0.5"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   }
 }

@@ -3,15 +3,15 @@
   "debug": false,
   "branches": [
     {
-      "name": "feature/*",
+      "name": "release/alpha",
       "prerelease": "alpha"
     },
     {
-      "name": "develop",
+      "name": "release/rc",
       "prerelease": "rc"
     },
     {
-      "name": "main",
+      "name": "release/prod",
       "prerelease": false
     }
   ],
