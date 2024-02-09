@@ -86,9 +86,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "store": "^2.0.0"
+  },
   "peerDependencies": {
-    "store": "^2.0.0",
-    "uuid": "^7.0.0 || ^8.0.0 || ^9.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
   }

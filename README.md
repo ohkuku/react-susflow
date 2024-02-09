@@ -38,60 +38,86 @@ pnpm i react-susflow
 
 ## Quick Start
 
-To use `react-susflow` in your React project, first import the `sus` function:
+The `react-susflow` library introduces caching capabilities to optimize asynchronous data fetching. Below is a quick
+guide on utilizing these new features within a React application:
 
 ```javascript
-import { sus } from 'react-susflow';
-```
+import {Suspense} from "react";
+import {sus} from 'react-susflow';
 
-Next, wrap your asynchronous function with `sus` to create a resource:
-
-```javascript
-// Note: only the promised functions are wrapable
-const fetchData = async (param1, param2) => {
-  const response = await fetch(`https://api.example.com/data?param1=${param1}&param2=${param2}`);
+// Define an asynchronous function for data fetching
+const fetchData = async (param) => {
+  const response = await fetch(`https://api.example.com/data?param=${param}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
   return response.json();
 };
 
-const resource = sus(fetchData);
-```
+// Wrap the async function with `sus`, specifying cache options
+const resource = sus(fetchData, {
+  cache: {
+    enable: true, // Enable caching
+    ttl: 300000 // Cache TTL set to 5 minutes, default to 1 minute
+  }
+});
 
-Finally, use this resource in your component with React Suspense:
+const SusComponent = () => {
+  const value = resource.read("world!");
+  return <>{JSON.stringify(value)}</>;
+};
 
-```javascript
-import React, {Suspense} from 'react';
+const SusComponent2 = () => {
+  const value = resource.read("china!", {useCache: false}); // useCache is set default to true
+  return <>{JSON.stringify(value)}</>;
+};
 
-function MyComponent() {
+// App component with two Suspense wrappers for each resource usage
+export default function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <DataDisplay/>
-    </Suspense>
+    <>
+      <Suspense fallback={<>Loading...</>}>
+        <SusComponent/>
+      </Suspense>
+      <Suspense fallback={<>Loading...</>}>
+        <SusComponent2/>
+      </Suspense>
+    </>
   );
 }
-
-function DataDisplay() {
-  const data = resource.read('param1.value', 'param2.value');
-  return <div>{JSON.stringify(data)}</div>;
-}
 ```
+
+This example demonstrates the use of `react-susflow` with caching enabled, showing how to selectively bypass the cache
+for certain reads using the `useCache: false` option.
 
 ## API Reference
 
-### `sus(asyncFunction)`
+### `sus(asyncFunction, options?)`
 
-- **Parameters**
-  - `asyncFunction`: An asynchronous function that returns a Promise.
-- **Returns**
-  - An object containing a `read` method for initiating the asynchronous operation and returning its result.
+Creates a resource from an asynchronous function, optionally configuring caching.
 
-### `read()`
+- **Parameters:**
+  - `asyncFunction`: An async function that returns a Promise.
+  - `options` (optional): Configuration for caching.
+    - `cache`:
+      - `enable` (optional): Boolean to enable or disable caching.
+      - `ttl` (optional): Time-to-live for cache entries in milliseconds.
 
-- **Description**
-  - This method triggers the asynchronous function wrapped by `sus`, and returns its result. During data loading, `read`
-    throws a Promise, which is caught by React Suspense and displays the fallback content.
+- **Returns:** An object with a `read` method for fetching data, either from the cache or by executing the asynchronous
+  function.
+
+### `read(...params, readOptions?)`
+
+Triggers the asynchronous operation, optionally utilizing the cache based on `readOptions`.
+
+- **Parameters:**
+  - `...params`: Arguments to pass to the asynchronous function.
+  - `readOptions` (optional): Options for reading data.
+    - `useCache` (optional): Boolean to specify whether to use the cache. Setting this to `false` forces a fresh fetch, bypassing
+      the cache.
+
+By providing a flexible caching mechanism and the ability to control cache usage on a per-read basis, `react-susflow`
+enhances data fetching strategies in React applications, offering improved performance and user experience.
 
 ## Frequently Asked Questions (FAQ)
 

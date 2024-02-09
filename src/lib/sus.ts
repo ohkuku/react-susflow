@@ -1,45 +1,53 @@
 import store from 'store/dist/store.modern';
 import plugins from 'store/plugins/all';
-import { v4 as uuidv4 } from 'uuid';
 
 store.addPlugin(plugins);
 
 export type SuspenderStatus = 'loading' | 'error' | 'success';
 
-export type CacheOptions = {
-  enableCache?: boolean;
-  ttl?: number;
+export type SuspenderOptions = {
+  cache?: {
+    enable?: boolean;
+    ttl?: number;
+  };
 };
 
-export type ReadOptions = {
+export type SuspenderReadOptions = {
   useCache?: boolean;
 };
 
-function generateCacheKey<T extends any[]>(
-  asyncFunction: (...args: T) => Promise<any>,
-  params: T,
-): string {
+function generateCacheKey<T extends any[]>(asyncFunction: (...args: T) => Promise<any>, params: T): string {
   const key = JSON.stringify(params);
-  const functionName = asyncFunction.name;
+  const functionName = asyncFunction.name || 'anonymous';
   return `${functionName}:${key}`;
 }
 
-export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Promise<T>, options?: CacheOptions) {
-  const internalResourceMap = new Map<string, { status: SuspenderStatus; result: T | undefined; error: Error | undefined; suspender: Promise<void> | null }>();
-  const { enableCache = true, ttl = 60000 } = options || {};
-
-  function read(...params: [...Args, ReadOptions?]): T {
-    const hasOptions = params.length > asyncFunction.length - 1;
-    let readOptions: ReadOptions = { useCache: true };
-
-    if (hasOptions) {
-      const possibleOptions = params[params.length - 1];
-      if (typeof possibleOptions === 'object' && possibleOptions !== null && 'useCache' in possibleOptions) {
-        readOptions = params.pop() as ReadOptions;
-      }
+function extractReadOptions(
+  params: any[],
+  asyncFunctionLength: number,
+): { parameters: any[]; readOptions: SuspenderReadOptions } {
+  const hasOptions = params.length > asyncFunctionLength;
+  let readOptions: SuspenderReadOptions = { useCache: true };
+  if (hasOptions) {
+    const possibleOptions = params.pop();
+    if (typeof possibleOptions === 'object' && possibleOptions !== null && 'useCache' in possibleOptions) {
+      readOptions = possibleOptions;
     }
+  }
+  return { parameters: params, readOptions };
+}
 
-    const cacheKey = generateCacheKey(asyncFunction, params as unknown as Args);
+export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Promise<T>, options?: SuspenderOptions) {
+  const internalResourceMap = new Map<
+    string,
+    { status: SuspenderStatus; result: T | undefined; error: Error | undefined; suspender: Promise<void> | null }
+  >();
+  const enableCache = options?.cache?.enable ?? true;
+  const ttl = options?.cache?.ttl ?? 60000;
+
+  function read(...params: [...Args, SuspenderReadOptions?]): T {
+    const { parameters, readOptions } = extractReadOptions([...params], asyncFunction.length);
+    const cacheKey = generateCacheKey(asyncFunction, parameters as Args);
 
     let resource = internalResourceMap.get(cacheKey);
     if (!resource) {
@@ -55,17 +63,20 @@ export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Pro
     }
 
     if (!resource.suspender) {
-      resource.suspender = asyncFunction(...params as unknown as Args)
-        .then(result => {
+      resource.suspender = asyncFunction(...(parameters as Args))
+        .then((result) => {
           resource!.status = 'success';
           resource!.result = result;
           if (enableCache && readOptions.useCache) {
             (store as any).set(cacheKey, result, new Date().getTime() + ttl);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           resource!.status = 'error';
           resource!.error = error instanceof Error ? error : new Error(String(error));
+        })
+        .finally(() => {
+          resource!.suspender = null; // Ensure the suspender is reset after completion
         });
     }
 
