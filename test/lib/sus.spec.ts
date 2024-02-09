@@ -1,10 +1,21 @@
-import {describe, it, expect} from 'vitest';
-import {sus} from '../../src';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { sus } from '../../src';
+
+import store from 'store';
+
+vi.mock('store', () => ({
+  default: {
+    get: vi.fn(),
+    set: vi.fn(),
+  },
+}));
 
 describe('sus', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
   describe('succeed scenario', () => {
-
     it('creates a resource that resolves with the expected value', async () => {
       const mockAsyncFunc = (mockParam: string) => Promise.resolve('test value ' + mockParam);
       const resource = sus(mockAsyncFunc);
@@ -56,11 +67,9 @@ describe('sus', () => {
       expect(resource.read()).toBe('constant value');
       expect(resource.read()).toBe('constant value');
     });
-
-  })
+  });
 
   describe('failure scenario', () => {
-
     it('throws error when async function rejects error object', async () => {
       const errorMessage = 'async error';
       const mockAsyncFunc = () => Promise.reject(new Error(errorMessage));
@@ -100,7 +109,43 @@ describe('sus', () => {
         }
       }
     });
+  });
 
-  })
+  describe('cache logic', () => {
+    it('should cache the result of the async function', async () => {
+      const mockAsyncFunc = vi.fn((param: string) => Promise.resolve(`Result: ${param}`));
+      const resource = sus(mockAsyncFunc);
 
+      vi.spyOn(store, 'get').mockReturnValueOnce(undefined);
+
+      let promiseThrown = false;
+      try {
+        resource.read('test');
+      } catch (e) {
+        if (e instanceof Promise) {
+          promiseThrown = true;
+          await e;
+        }
+      }
+
+      expect(promiseThrown).toBe(true);
+      expect(mockAsyncFunc).toHaveBeenCalledWith('test');
+      expect(store.set).toHaveBeenCalledWith(expect.any(String), 'Result: test');
+      expect(resource.read('test')).toBe('Result: test');
+      expect(store.get).toHaveBeenCalledWith(expect.any(String));
+    });
+
+    it('should retrieve the result from cache on subsequent calls', async () => {
+      const cachedValue = 'Cached result';
+      vi.spyOn(store, 'get').mockReturnValueOnce(cachedValue);
+
+      const mockAsyncFunc = vi.fn(() => Promise.resolve('New result'));
+      const resource = sus(mockAsyncFunc);
+
+      const result = resource.read();
+
+      expect(result).toBe(cachedValue);
+      expect(mockAsyncFunc).not.toHaveBeenCalled();
+    });
+  });
 });
