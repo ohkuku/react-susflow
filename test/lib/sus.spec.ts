@@ -1,12 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { sus } from '../../src';
 
-import store from 'store';
+import store from 'store/dist/store.modern';
 
-vi.mock('store', () => ({
+vi.mock('store/dist/store.modern', () => ({
   default: {
     get: vi.fn(),
     set: vi.fn(),
+    addPlugin: vi.fn(),
   },
 }));
 
@@ -115,8 +116,9 @@ describe('sus', () => {
     it('should cache the result of the async function', async () => {
       const mockAsyncFunc = vi.fn((param: string) => Promise.resolve(`Result: ${param}`));
       const resource = sus(mockAsyncFunc);
-
+      const mockTime = 1625097600000;
       vi.spyOn(store, 'get').mockReturnValueOnce(undefined);
+      const dateSpy = vi.spyOn(Date.prototype, 'getTime').mockReturnValue(mockTime);
 
       let promiseThrown = false;
       try {
@@ -130,7 +132,7 @@ describe('sus', () => {
 
       expect(promiseThrown).toBe(true);
       expect(mockAsyncFunc).toHaveBeenCalledWith('test');
-      expect(store.set).toHaveBeenCalledWith(expect.any(String), 'Result: test');
+      expect(store.set).toHaveBeenCalledWith(expect.any(String), 'Result: test', mockTime + 60000);
       expect(resource.read('test')).toBe('Result: test');
       expect(store.get).toHaveBeenCalledWith(expect.any(String));
     });

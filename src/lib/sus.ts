@@ -1,15 +1,21 @@
-import store from 'store';
+import store from 'store/dist/store.modern';
+import plugins from 'store/plugins/all';
+
 import { v4 as uuidv4 } from 'uuid';
 
 export type SuspenderStatus = 'loading' | 'error' | 'success';
 
 export type CacheOptions = {
+  enableCache?: boolean;
   standalone?: boolean;
+  ttl?: number;
 };
 
 export type ReadOptions = {
   useCache?: boolean;
 };
+
+store.addPlugin(plugins);
 
 function generateCacheKey<T extends any[]>(
   asyncFunction: (...args: T) => Promise<any>,
@@ -32,7 +38,11 @@ export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Pro
   let suspender: Promise<void> | null = null;
   let cacheKey: string | undefined = undefined;
 
-  const { standalone = false } = options || {};
+  const {
+    enableCache = true,
+    standalone = false,
+    ttl = 60000,
+  } = options || {};
 
   return {
     read(...params: [...Args, ReadOptions?]): T {
@@ -52,7 +62,7 @@ export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Pro
         cacheKey = key;
       }
 
-      const cachedResult = readOptions.useCache && key ? store.get(key) : undefined;
+      const cachedResult = enableCache && readOptions.useCache && key ? store.get(key) : undefined;
 
       if (cachedResult !== undefined) {
         status = 'success';
@@ -67,8 +77,8 @@ export function sus<T, Args extends any[]>(asyncFunction: (...args: Args) => Pro
             status = 'success';
             result = r;
 
-            if (key && readOptions.useCache) {
-              store.set(key, r);
+            if (key && readOptions.useCache && enableCache) {
+              (store as any).set(key, r, new Date().getTime() + ttl);
             }
           },
           (e) => {
